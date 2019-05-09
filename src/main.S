@@ -38,7 +38,7 @@ main:
   ldr r0, =0xE000ED20
   mov r1, 0
   mov r2, 30
-  mov r3, 0
+  mov r3, 1
   bl write_bit
 
   ldr r0, =0xE000ED20
@@ -100,6 +100,11 @@ main:
 
   ldr r0, =0xE000E010
   mov r1, 0
+  mov r2, 1
+  bl set_bit
+
+  ldr r0, =0xE000E010
+  mov r1, 0
   mov r2, 2
   bl set_bit
 
@@ -108,23 +113,9 @@ main:
   ldr r4, =4000000 
   str r4, [r3]
 
-  @set the counter SYST_CVR
-  ldr r5, =0xE000E018
-  b poll
-
-poll:
-  ldr r6, [r5]
-  cmp r6, 0 
-  beq finished
-  b poll
-
-  b main
-.size main, .-main
-
-finished:
-  bl SysTick_Handler
-  b finished
-
+loop:
+nop
+b loop
 
 
 
